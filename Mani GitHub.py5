@@ -1,1 +1,14 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
 
+# Initialize TfidfVectorizer
+tfidf_vectorizer = TfidfVectorizer(max_features=5000, ngram_range=(1, 2))
+
+# Fit and transform the text data
+tfidf_matrix = tfidf_vectorizer.fit_transform(df['Text'])
+
+# Convert the TF-IDF matrix to a DataFrame
+tfidf_df = pd.DataFrame(tfidf_matrix.toarray(), columns=tfidf_vectorizer.get_feature_names_out())
+
+# Concatenate the TF-IDF DataFrame with the original DataFrame
+df = pd.concat([df, tfidf_df], axis=1)
+display(df.head())
