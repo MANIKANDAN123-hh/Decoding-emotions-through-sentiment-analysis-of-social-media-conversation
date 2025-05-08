@@ -1,1 +1,19 @@
+from sklearn.model_selection import train_test_split
 
+# Define features (X) and target (y)
+X = df.drop(['cleaned_sentiment', 'Sentiment', 'Unnamed: 0.1', 'Unnamed: 0', 'Text', 'Timestamp', 'User', 'Platform', 'Hashtags', 'Country', 'Year', 'Month', 'Day', 'Hour'], axis=1)
+y = df['cleaned_sentiment']
+
+# First split: 80% train, 20% temp (val/test)
+X_train, X_temp, y_train, y_temp = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Second split: 50% val, 50% test from temp
+X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
+
+# Print the shapes of the resulting sets to verify the split
+print("X_train shape:", X_train.shape)
+print("y_train shape:", y_train.shape)
+print("X_val shape:", X_val.shape)
+print("y_val shape:", y_val.shape)
+print("X_test shape:", X_test.shape)
+print("y_test shape:", y_test.shape)
