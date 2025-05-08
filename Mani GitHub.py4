@@ -1,1 +1,20 @@
+import re
+import nltk
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+from nltk.stem import WordNetLemmatizer
 
+# Convert text to lowercase
+df['Text'] = df['Text'].str.lower()
+
+# Remove punctuation and special characters
+df['Text'] = df['Text'].apply(lambda x: re.sub(r'[^\w\s]', '', str(x)))
+
+# Remove extra whitespaces
+df['Text'] = df['Text'].str.strip()
+df['Text'] = df['Text'].apply(lambda x: re.sub(r'\s+', ' ', str(x)))
+
+# Lemmatize text
+lemmatizer = WordNetLemmatizer()
+df['Text'] = df['Text'].apply(lambda x: ' '.join([lemmatizer.lemmatize(word) for word in x.split()]))
+display(df.head())
