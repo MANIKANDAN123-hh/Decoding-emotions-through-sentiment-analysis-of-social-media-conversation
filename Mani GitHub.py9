@@ -1,1 +1,17 @@
+# Generate classification report
+    print("\nClassification Report:\n", classification_report(y_val, y_pred, zero_division=1))
 
+    # Generate and plot the confusion matrix
+    cm = confusion_matrix(y_val, y_pred)
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+                xticklabels=logreg_model.classes_, yticklabels=logreg_model.classes_)
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.title('Confusion Matrix')
+    plt.show()
+
+except ValueError as e:
+    print(f"Error calculating metrics: {e}")
+except AttributeError as e:
+    print(f"AttributeError: {e}")
